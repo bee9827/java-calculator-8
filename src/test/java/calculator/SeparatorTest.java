@@ -15,4 +15,14 @@ class SeparatorTest {
 
         assertThat(split).containsExactly("1", "2", "3");
     }
+
+    @Test
+    void addSeparator() {
+        Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        String custom = "[";
+        separator.addSeparator(custom);
+
+        assertThat(separator.getSeparator()).contains(custom);
+
+    }
 }
