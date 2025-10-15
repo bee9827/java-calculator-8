@@ -24,6 +24,22 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    void 중복_커스텀_구분자_예외(){
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//:\\n1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    void 다중_커스텀_구분자_사용(){
+        assertSimpleTest(() -> {
+            run("//[]';\\n1[2]3;4'5");
+            assertThat(output()).contains("결과 : 15");
+        });
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
