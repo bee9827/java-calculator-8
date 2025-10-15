@@ -10,8 +10,9 @@ class SeparatorTest {
     @Test
     void split() {
         Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        separator.addSeparator("[");
 
-        List<String> split = separator.split("1:23");
+        List<String> split = separator.split("1:2[3");
 
         assertThat(split).containsExactly("1", "2", "3");
     }
@@ -29,9 +30,12 @@ class SeparatorTest {
     @Test
     void extractSeparator() {
         Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
-        String customSeparatorInput = "//\\\n";
-        String customSeparator = separator.extractSeparator(customSeparatorInput);
+        String customSeparatorInput = "//[]'\\n1";
+        List<String> customSeparator = separator.extractSeparator(customSeparatorInput);
 
-        assertThat(customSeparator).contains("\\");
+        assertThat(customSeparator)
+                .contains("[")
+                .contains("]")
+                .contains("'");
     }
 }

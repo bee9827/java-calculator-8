@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Separator {
-    public static final Pattern SEPARATOR_PATTERN = Pattern.compile("^//(.)\\n$");
+    public static final Pattern SEPARATOR_PATTERN = Pattern.compile("//(.+)\\\\n(.*)");
     public static final String NUMBER_REGEX = "\\d+";
     public static final int SEPARATOR_SIZE = 1;
     private final Set<String> separator = new HashSet<>();
@@ -18,21 +18,33 @@ public class Separator {
         separator.forEach(this::addSeparator);
     }
 
-    public String extractSeparator(String combinedSeparator) {
+    public List<String> extractSeparator(String combinedSeparator) {
+        // "//{문자열}\n 사이의 모든 문자열을
         Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
         if (matcher.matches()) {
-            return matcher.group(1);
+            return Arrays.stream(matcher.group(1).split(""))
+                    .toList();
         }
-        throw new IllegalArgumentException("Invalid separator: %s".formatted(combinedSeparator));
+        throw new IllegalArgumentException("유효하지 않은 형식입니다." + combinedSeparator);
+    }
+
+    public String extractNumbers(String combinedSeparator) {
+        Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
+        if (matcher.matches()) {
+            return matcher.group(2);
+        }
+        return combinedSeparator;
     }
 
     public List<String> split(String combinedStr) {
         if (combinedStr.charAt(0) == '/') {
-            String customSeparator = extractSeparator(combinedStr);
-            addSeparator(customSeparator);
+            List<String> customSeparator = extractSeparator(combinedStr);
+            customSeparator.forEach(this::addSeparator);
         }
 
-        return Arrays.stream(combinedStr.split(getSeparatorRegex()))
+        String numbers = extractNumbers(combinedStr);
+
+        return Arrays.stream(numbers.split(getSeparatorRegex()))
                 .toList();
     }
 
@@ -71,6 +83,6 @@ public class Separator {
 
     private String getSeparatorRegex() {
         String regex = String.join("", separator);
-        return "[%s]".formatted(regex);
+        return "[%s]".formatted(Pattern.quote(regex));
     }
 }

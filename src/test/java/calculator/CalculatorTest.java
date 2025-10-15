@@ -11,6 +11,6 @@ class CalculatorTest {
     void add() {
         List<String> numbers = List.of("1", "2", "3");
 
-        assertThat(Calculator.addStringNumbers(numbers)).isEqualTo(6);
+        assertThat(Calculator.addPositiveStringNumbers(numbers)).isEqualTo(6);
     }
 }
