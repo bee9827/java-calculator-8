@@ -25,4 +25,13 @@ class SeparatorTest {
         assertThat(separator.getSeparator()).contains(custom);
 
     }
+
+    @Test
+    void extractSeparator() {
+        Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        String customSeparatorInput = "//\\\n";
+        String customSeparator = separator.extractSeparator(customSeparatorInput);
+
+        assertThat(customSeparator).contains("\\");
+    }
 }
