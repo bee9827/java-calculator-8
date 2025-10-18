@@ -9,17 +9,17 @@ class SeparatorTest {
 
     @Test
     void split() {
-        Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
         separator.addSeparator("[");
 
-        List<String> split = separator.split("1:2[3");
+        List<Integer> split = separator.splitNumbers("1:2[3");
 
-        assertThat(split).containsExactly("1", "2", "3");
+        assertThat(split).containsExactly(1,2,3);
     }
 
     @Test
     void addSeparator() {
-        Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
         String custom = "[";
         separator.addSeparator(custom);
 
@@ -29,9 +29,9 @@ class SeparatorTest {
 
     @Test
     void extractSeparator() {
-        Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
         String customSeparatorInput = "//[]'\\n1";
-        List<String> customSeparator = separator.extractSeparator(customSeparatorInput);
+        List<String> customSeparator = separator.extractSeparators(customSeparatorInput);
 
         assertThat(customSeparator)
                 .contains("[")

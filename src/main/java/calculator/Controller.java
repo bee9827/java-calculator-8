@@ -12,12 +12,17 @@ public class Controller {
     }
 
     public void run() {
-        Separator separator = new Separator(DefaultSeparator.getDefaultSeparators());
+        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
 
-        List<String> splitNumbers = separator.split(inputView.readPlusString());
-        int result = Calculator.addPositiveStringNumbers(splitNumbers);
-        outputView.printlnResult(result);
+        addPositiveNumbersBySeparator(separator);
 
         inputView.close();
+    }
+
+    private void addPositiveNumbersBySeparator(CalculatorSeparator separator) {
+        List<Integer> splitNumbers = separator.splitNumbers(inputView.readPlusString());
+        splitNumbers.forEach(Validator::validatePositive);
+        int result = Calculator.addNumbers(splitNumbers);
+        outputView.printlnResult(result);
     }
 }

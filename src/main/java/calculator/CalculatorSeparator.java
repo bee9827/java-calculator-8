@@ -8,17 +8,17 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Separator {
+public class CalculatorSeparator {
     public static final Pattern SEPARATOR_PATTERN = Pattern.compile("//(.+)\\\\n(.*)");
     public static final String NUMBER_REGEX = "\\d+";
     public static final int SEPARATOR_SIZE = 1;
     private final Set<String> separator = new HashSet<>();
 
-    public Separator(List<String> separator) {
+    public CalculatorSeparator(List<String> separator) {
         separator.forEach(this::addSeparator);
     }
 
-    public List<String> extractSeparator(String combinedSeparator) {
+    public List<String> extractSeparators(String combinedSeparator) {
         // "//{문자열}\n 사이의 모든 문자열을
         Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
         if (matcher.matches()) {
@@ -36,15 +36,16 @@ public class Separator {
         return combinedSeparator;
     }
 
-    public List<String> split(String combinedStr) {
+    public List<Integer> splitNumbers(String combinedStr) {
         if (combinedStr.charAt(0) == '/') {
-            List<String> customSeparator = extractSeparator(combinedStr);
+            List<String> customSeparator = extractSeparators(combinedStr);
             customSeparator.forEach(this::addSeparator);
         }
 
         String numbers = extractNumbers(combinedStr);
 
         return Arrays.stream(numbers.split(getSeparatorRegex()))
+                .map(Integer::parseInt)
                 .toList();
     }
 
