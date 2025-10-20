@@ -12,6 +12,8 @@ public class NumberSeparator {
     public static final Pattern SEPARATOR_PATTERN = Pattern.compile("//(.+)\\\\n(.*)");
     public static final String NUMBER_REGEX = "\\d+";
     public static final int SEPARATOR_SIZE = 1;
+    private static final int CUSTOM_SEPARATOR_LOCATION = 1;
+    private static final int NUMBERS_LOCATION = 2;
     private final Set<String> separator = new HashSet<>();
 
     public NumberSeparator(List<String> separator) {
@@ -22,7 +24,7 @@ public class NumberSeparator {
         // "//{문자열}\n 사이의 모든 문자열을
         Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
         if (matcher.matches()) {
-            return Arrays.stream(matcher.group(1).split(""))
+            return Arrays.stream(matcher.group(CUSTOM_SEPARATOR_LOCATION).split(""))
                     .toList();
         }
         throw new IllegalArgumentException("유효하지 않은 형식입니다." + combinedSeparator);
@@ -31,7 +33,7 @@ public class NumberSeparator {
     public String extractNumbers(String combinedSeparator) {
         Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
         if (matcher.matches()) {
-            return matcher.group(2);
+            return matcher.group(NUMBERS_LOCATION);
         }
         return combinedSeparator;
     }

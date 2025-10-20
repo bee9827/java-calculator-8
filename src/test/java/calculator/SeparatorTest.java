@@ -35,6 +35,7 @@ class SeparatorTest {
         String customSeparatorInput = "//[]'\\n1";
         List<String> customSeparator = separator.extractSeparators(customSeparatorInput);
 
+        System.out.println(customSeparator);
         assertThat(customSeparator)
                 .contains("[")
                 .contains("]")

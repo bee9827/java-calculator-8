@@ -26,6 +26,15 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("숫자 구분자 예외")
+    void numberException(){
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//1\\n1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
     @DisplayName("\\구분자 사용")
     void backSlashSeparator(){
         assertSimpleTest(() -> {
