@@ -26,6 +26,15 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("\\구분자 사용")
+    void backSlashSeparator(){
+        assertSimpleTest(() -> {
+            run("//\\\\n1:2\\3");
+            assertThat(output()).contains("결과 : 6");
+        });
+    }
+
+    @Test
     @DisplayName("정규식 예약어 구분자")
     void regexSeparator(){
         assertSimpleTest(() -> {
