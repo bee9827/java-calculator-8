@@ -2,6 +2,8 @@ package calculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import calculator.model.DefaultSeparator;
+import calculator.model.NumberSeparator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 

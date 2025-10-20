@@ -1,4 +1,4 @@
-package calculator;
+package calculator.common;
 
 public class Validator {
     public static void validatePositive(Integer number){

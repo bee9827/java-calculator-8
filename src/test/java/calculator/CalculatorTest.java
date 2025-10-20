@@ -2,6 +2,7 @@ package calculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import calculator.common.Calculator;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
