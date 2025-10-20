@@ -9,7 +9,7 @@ class SeparatorTest {
 
     @Test
     void split() {
-        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
+        NumberSeparator separator = new NumberSeparator(DefaultSeparator.getDefaultSeparators());
         separator.addSeparator("[");
 
         List<Integer> split = separator.splitNumbers("1:2[3");
@@ -19,7 +19,7 @@ class SeparatorTest {
 
     @Test
     void addSeparator() {
-        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
+        NumberSeparator separator = new NumberSeparator(DefaultSeparator.getDefaultSeparators());
         String custom = "[";
         separator.addSeparator(custom);
 
@@ -29,7 +29,7 @@ class SeparatorTest {
 
     @Test
     void extractSeparator() {
-        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
+        NumberSeparator separator = new NumberSeparator(DefaultSeparator.getDefaultSeparators());
         String customSeparatorInput = "//[]'\\n1";
         List<String> customSeparator = separator.extractSeparators(customSeparatorInput);
 

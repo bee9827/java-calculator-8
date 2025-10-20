@@ -12,14 +12,14 @@ public class Controller {
     }
 
     public void run() {
-        CalculatorSeparator separator = new CalculatorSeparator(DefaultSeparator.getDefaultSeparators());
+        NumberSeparator separator = new NumberSeparator(DefaultSeparator.getDefaultSeparators());
 
         addPositiveNumbersBySeparator(separator);
 
         inputView.close();
     }
 
-    private void addPositiveNumbersBySeparator(CalculatorSeparator separator) {
+    private void addPositiveNumbersBySeparator(NumberSeparator separator) {
         List<Integer> splitNumbers = separator.splitNumbers(inputView.readPlusString());
         splitNumbers.forEach(Validator::validatePositive);
         int result = Calculator.addNumbers(splitNumbers);

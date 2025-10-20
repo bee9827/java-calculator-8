@@ -8,13 +8,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CalculatorSeparator {
+public class NumberSeparator {
     public static final Pattern SEPARATOR_PATTERN = Pattern.compile("//(.+)\\\\n(.*)");
     public static final String NUMBER_REGEX = "\\d+";
     public static final int SEPARATOR_SIZE = 1;
     private final Set<String> separator = new HashSet<>();
 
-    public CalculatorSeparator(List<String> separator) {
+    public NumberSeparator(List<String> separator) {
         separator.forEach(this::addSeparator);
     }
 

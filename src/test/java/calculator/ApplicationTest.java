@@ -1,6 +1,7 @@
 package calculator;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
@@ -22,6 +23,15 @@ class ApplicationTest extends NsTest {
             assertThatThrownBy(() -> runException("-1,2,3"))
                 .isInstanceOf(IllegalArgumentException.class)
         );
+    }
+
+    @Test
+    @DisplayName("정규식 예약어 구분자")
+    void regexSeparator(){
+        assertSimpleTest(() -> {
+            run("//[\\n1:2[3");
+            assertThat(output()).contains("결과 : 6");
+        });
     }
 
     @Test
