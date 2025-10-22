@@ -14,8 +14,12 @@ public class PositiveNumberCalculator {
     }
 
     public Integer sum() {
-        return numbers.stream()
-                .reduce(0, Integer::sum);
+        try {
+            return numbers.stream()
+                    .reduce(0, Math::addExact);
+        }catch (ArithmeticException e) {
+            throw new IllegalArgumentException("숫자가 너무 커 합을 구할 수 없습니다.");
+        }
     }
 
     private void validateNonEmpty(List<Integer> numbers) {
