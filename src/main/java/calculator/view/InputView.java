@@ -1,6 +1,6 @@
 package calculator.view;
 
 public interface InputView {
-    String readPlusString();
+    String readCombinedNumbers();
     void close();
 }

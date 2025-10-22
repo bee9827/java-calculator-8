@@ -16,7 +16,7 @@ class SeparatorTest {
 
         List<Integer> split = separator.splitNumbers("1:2[3");
 
-        assertThat(split).containsExactly(1,2,3);
+        assertThat(split).containsExactly(1, 2, 3);
     }
 
     @Test
@@ -33,7 +33,7 @@ class SeparatorTest {
     void extractSeparator() {
         NumberSeparator separator = new NumberSeparator(DefaultSeparator.getDefaultSeparators());
         String customSeparatorInput = "//[]'\\n1";
-        List<String> customSeparator = separator.extractSeparators(customSeparatorInput);
+        List<String> customSeparator = separator.extractCustomSeparators(customSeparatorInput);
 
         System.out.println(customSeparator);
         assertThat(customSeparator)

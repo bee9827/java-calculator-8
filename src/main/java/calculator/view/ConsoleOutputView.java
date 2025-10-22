@@ -1,8 +1,8 @@
 package calculator.view;
 
-public class OutputViewImp implements OutputView {
+public class ConsoleOutputView implements OutputView {
     @Override
-    public void printlnResult(int result) {
+    public void printlnSum(int result) {
         System.out.printf("결과 : %d%n", result);
     }
 }

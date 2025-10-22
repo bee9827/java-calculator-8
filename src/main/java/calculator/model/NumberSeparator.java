@@ -9,51 +9,50 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NumberSeparator {
-    public static final Pattern SEPARATOR_PATTERN = Pattern.compile("//(.+)\\\\n(.*)");
+    public static final Pattern SEPARATOR_PATTERN = Pattern.compile("//(.+)\\\\n(.+)");
     public static final String NUMBER_REGEX = "\\d+";
     public static final int SEPARATOR_SIZE = 1;
+
     private static final int CUSTOM_SEPARATOR_LOCATION = 1;
     private static final int NUMBERS_LOCATION = 2;
+
     private final Set<String> separator = new HashSet<>();
 
     public NumberSeparator(List<String> separator) {
         separator.forEach(this::addSeparator);
     }
 
-    public List<String> extractSeparators(String combinedSeparator) {
-        // "//{문자열}\n 사이의 모든 문자열을
-        Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
+    public static List<String> extractCustomSeparators(String combined) {
+        Matcher matcher = SEPARATOR_PATTERN.matcher(combined);
         if (matcher.matches()) {
             return Arrays.stream(matcher.group(CUSTOM_SEPARATOR_LOCATION).split(""))
                     .toList();
         }
-        throw new IllegalArgumentException("유효하지 않은 형식입니다." + combinedSeparator);
+        return Collections.emptyList();
     }
 
-    public String extractNumbers(String combinedSeparator) {
-        Matcher matcher = SEPARATOR_PATTERN.matcher(combinedSeparator);
+    public static String extractNumbersWithSeparators(String combined) {
+        Matcher matcher = SEPARATOR_PATTERN.matcher(combined);
         if (matcher.matches()) {
             return matcher.group(NUMBERS_LOCATION);
         }
-        return combinedSeparator;
-    }
-
-    public List<Integer> splitNumbers(String combinedStr) {
-        if (combinedStr.charAt(0) == '/') {
-            List<String> customSeparator = extractSeparators(combinedStr);
-            customSeparator.forEach(this::addSeparator);
-        }
-
-        String numbers = extractNumbers(combinedStr);
-
-        return Arrays.stream(numbers.split(getSeparatorRegex()))
-                .map(Integer::parseInt)
-                .toList();
+        return combined;
     }
 
     public void addSeparator(String customSeparator) {
         validateSeparator(customSeparator);
         separator.add(customSeparator);
+    }
+
+    public List<Integer> splitNumbers(String numbersWithSeparators) {
+        String numbers = extractNumbersWithSeparators(numbersWithSeparators);
+        String separatorRegex = getSeparatorRegex();
+
+        List<String> numberList = Arrays.asList(numbers.split(separatorRegex));
+
+        return numberList.stream()
+                .map(Integer::parseInt)
+                .toList();
     }
 
     public Set<String> getSeparator() {
@@ -68,19 +67,19 @@ public class NumberSeparator {
 
     private void validateSize(String customSeparator) {
         if (customSeparator == null || customSeparator.length() != SEPARATOR_SIZE) {
-            throw new IllegalArgumentException("Invalid custom separator: " + customSeparator);
+            throw new IllegalArgumentException("유효하지 않은 커스텀 구분자 : %s".formatted(customSeparator));
         }
     }
 
     private void validateNumber(String customSeparator) {
         if (customSeparator.matches(NUMBER_REGEX)) {
-            throw new IllegalArgumentException("Invalid custom separator: " + customSeparator);
+            throw new IllegalArgumentException("유효하지 않은 커스텀 구분자 : %s".formatted(customSeparator));
         }
     }
 
     private void validateDuplicate(String customSeparator) {
         if (separator.contains(customSeparator)) {
-            throw new IllegalArgumentException("Duplicate separator found");
+            throw new IllegalArgumentException("유효하지 않은 커스텀 구분자 : %s".formatted(customSeparator));
         }
     }
 
