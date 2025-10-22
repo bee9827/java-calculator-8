@@ -29,6 +29,7 @@ public class Controller {
     private PositiveNumberCalculator createCalculator(String combinedNumbers, NumberSeparator separator) {
         List<String> customSeparator = NumberSeparator.extractCustomSeparators(combinedNumbers);
         String numbersWithSeparator = NumberSeparator.extractNumbersWithSeparators(combinedNumbers);
+        
         customSeparator.forEach(separator::addSeparator);
         List<Integer> splitNumbers = separator.splitNumbers(numbersWithSeparator);
 
