@@ -19,20 +19,19 @@ public class Controller {
     public void run() {
         NumberSeparator separator = new NumberSeparator(DefaultSeparator.getDefaultSeparators());
 
-        PositiveNumberCalculator calculator = createCalculator(inputView.readCombinedNumbers(), separator);
+        List<Integer> numbers = splitNumbers(inputView.readCombinedNumbers(), separator);
+        PositiveNumberCalculator calculator = new PositiveNumberCalculator(numbers);
         Integer sum = calculator.sum();
         outputView.printlnSum(sum);
 
         inputView.close();
     }
 
-    private PositiveNumberCalculator createCalculator(String combinedNumbers, NumberSeparator separator) {
+    private List<Integer> splitNumbers(String combinedNumbers, NumberSeparator separator) {
         List<String> customSeparator = NumberSeparator.extractCustomSeparators(combinedNumbers);
         String numbersWithSeparator = NumberSeparator.extractNumbersWithSeparators(combinedNumbers);
-        
-        customSeparator.forEach(separator::addSeparator);
-        List<Integer> splitNumbers = separator.splitNumbers(numbersWithSeparator);
 
-        return new PositiveNumberCalculator(splitNumbers);
+        customSeparator.forEach(separator::addSeparator);
+        return separator.splitNumbers(numbersWithSeparator);
     }
 }
